@@ -61,7 +61,7 @@ function boxid() {
     });
 }
 async function fold() {
-    let p = await fetch(`/Playlist/`)
+    let p = await fetch(`https://github.com/Vibes-With-Tushar/Spotify/tree/master/Playlist/`)
     let response = await p.text()
     let div = document.createElement("div");
     div.innerHTML = response;
