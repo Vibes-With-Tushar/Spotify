@@ -30,12 +30,13 @@ function gridcount() {
         }
 
 
-    }}
+    }
+}
 
 
 window.onresize = function () {
     var currentWidth = window.innerWidth;
-    var reloadWidth = 600; 
+    var reloadWidth = 600;
 
     if (currentWidth !== reloadWidth) {
         location.reload();
@@ -61,46 +62,71 @@ function boxid() {
     });
 }
 async function fold() {
-    let p = await fetch(`https://github.com/Vibes-With-Tushar/Spotify/tree/master/Playlist/`)
+    // https://raw.githubusercontent.com/Vibes-With-Tushar/Spotify/master/Playlist/Punjabi/info.json
+    let p = await fetch(`https://api.github.com/repos/Vibes-With-Tushar/Spotify/contents/Playlist?ref=master`)
     let response = await p.text()
     let div = document.createElement("div");
     div.innerHTML = response;
-    let anchors = div.getElementsByTagName("a");
-    let arr = Array.from(anchors);
+    let objFromStr = JSON.parse(response);
+
     let cardCont = document.querySelector(".albums");
-    for (let i = 0; i < arr.length; i++) {
-        if (arr[i].href.includes("/Playlist")) {
-            let folder = (arr[i].href.split("/").slice(-2))[0];
-            let p = await fetch(`/Playlist/${folder}/info.json`)
-            let response = await p.json()
-            cardCont.innerHTML = cardCont.innerHTML + `<div data-file="${folder}" class="box df br">
-            <img class="ig df br" src="${response.img}" alt="img">
-            <h2 class="heads">
-            ${response.title}
-            </h2>
-            <div class="des">
-            ${response.des}
-            </div>
-            </div>`
+    for (let i = 0; i < objFromStr.length; i++) {
+        // console.log(objFromStr[i].url)
+        let url = objFromStr[i].url;
+        let p = await fetch(url)
+        let response = await p.json()
+        for (let j = 0; j < response.length; j++) {
+            if (response[j].name == "info.json") {
+                let url1 = response[j].download_url;
+                let folder = (url1.split("/")[7]);
+                // console.log(folder);
+                let p1 = await fetch(url1)
+                let response1 = await p1.json()
+                cardCont.innerHTML = cardCont.innerHTML + `<div data-file="${folder}" class="box df br">
+                <img class="ig df br" src="${response1.img}" alt="img">
+                <h2 class="heads">
+                ${response1.title}
+                </h2>
+                <div class="des">
+                ${response1.des}
+                </div>
+                </div>`
+            }
+            
         }
+        
+        // if (arr[i].href.includes("/Playlist")) {
+            // let folder = (url1.split("/").slice(-2))[0];
+            //     cardCont.innerHTML = cardCont.innerHTML + `<div data-file="${folder}" class="box df br">
+            //     <img class="ig df br" src="${response.img}" alt="img">
+            //     <h2 class="heads">
+        //     ${response.title}
+        //     </h2>
+        //     <div class="des">
+        //     ${response.des}
+        //     </div>
+        //     </div>`
+        // }
+
 
     }
     Array.from(document.getElementsByClassName("create")).forEach(e => {
         e.addEventListener("click", (a) => {
             let m = a.currentTarget.dataset.link;
-            let t=(e.getElementsByClassName("t1")[0].innerHTML).trim();
-            let by=(e.getElementsByClassName("t2")[0].innerHTML).trim();
-            playMusic(t+" - "+by+".mp3",false,m)
+            let t = (e.getElementsByClassName("t1")[0].innerHTML).trim();
+            let by = (e.getElementsByClassName("t2")[0].innerHTML).trim();
+            playMusic(t + " - " + by + ".mp3", false, m)
         })
     })
-    
+
     Array.from(document.getElementsByClassName("box")).forEach((e) => {
         e.addEventListener("click", async item => {
             let x = item.currentTarget.dataset.file;
+            // console.log(x)
             var rootElement = document.documentElement;
             rootElement.style.setProperty('--val', x);
             localStorage.setItem('--val', x);
-            library()
+            // library()
 
         })
 
@@ -125,11 +151,10 @@ async function main() {
             loadContent(url);
         });
     });
-    if(currentHistory!="")
-    {
+    if (currentHistory != "") {
         document.querySelector(".scroll1").innerHTML = "";
-            for (let i = 0; i < currentHistory.length; i++) {
-                let html = `<div data-link="${currentHistory[i].page}" class="create br df">
+        for (let i = 0; i < currentHistory.length; i++) {
+            let html = `<div data-link="${currentHistory[i].page}" class="create br df">
                 <span class="no">◑</span>
                 <span class="t1">${currentHistory[i].title}
                 </span>
@@ -146,11 +171,11 @@ async function main() {
                 </g>
                 </svg></button>
                 </div>`
-                document.querySelector(".scroll1").innerHTML = document.querySelector(".scroll1").innerHTML + html;
+            document.querySelector(".scroll1").innerHTML = document.querySelector(".scroll1").innerHTML + html;
 
-            }
+        }
     }
-    
+
     play.addEventListener("click", () => {
 
         console.log("play/pause");
@@ -203,6 +228,6 @@ async function main() {
 
     }
     )
-    
+
 }
 main()
