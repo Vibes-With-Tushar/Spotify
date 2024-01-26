@@ -43,34 +43,41 @@ async function main() {
 
 
     // }
-    playMusic(y[0], true, x)
+    setTimeout(() => {
+        
+        playMusic(y[0], true, x)
+    }, 1000);
 
     for (let i = 0; i < sname.length; i++) {
         slist(i + 1, sname[i], aname[i], "5", time[i])
     }
-    currentsong.addEventListener("timeupdate", () => {
-        // console.log(currentsong.currentTime, currentsong.duration);
-        let x = currentsong.currentTime;
-        let y = currentsong.duration;
-        if (!isNaN(currentsong.duration) && isFinite(currentsong.duration)) {
-            document.querySelector(".song_time").innerHTML = `${secondsToMMSS(x)}/${secondsToMMSS(y)}`
-            document.querySelector(".circle").style.left = (x / y) * 100 + "%";
-            document.querySelector(".fill").style.width = (x / y) * 100 + "%";
-        }
+    // currentsong.addEventListener("timeupdate", () => {
+    //     // console.log(currentsong.currentTime, currentsong.duration);
+    //     let x = currentsong.currentTime;
+    //     let y = currentsong.duration;
+    //     console.log("cur-dur");
+    //     if (!isNaN(currentsong.duration) && isFinite(currentsong.duration)) {
+    //         document.querySelector(".song_time").innerHTML = `${secondsToMMSS(x)}/${secondsToMMSS(y)}`
+    //         document.querySelector(".circle").style.left = (x / y) * 100 + "%";
+    //         document.querySelector(".fill").style.width = (x / y) * 100 + "%";
+    //     }
 
-    }
-    )
+    // }
+    // )
 
     Array.from(document.querySelector(".play_songs").getElementsByTagName("tr")).forEach(e => {
         e.addEventListener("click", (a) => {
             flag = 1;
             document.querySelector(".circle").style.left = 0 + "%";
             document.querySelector(".fill").style.width = 0 + "%";
-            playMusic(e.getElementsByTagName("th")[1].innerHTML + "-" + e.getElementsByTagName("th")[2].innerHTML + ".mp3", false, x)
-
+            setTimeout(() => {
+                playMusic(e.getElementsByTagName("th")[1].innerHTML + "-" + e.getElementsByTagName("th")[2].innerHTML + ".mp3", false, x)
+            }, 1000);
+            
             // recent(x, e.getElementsByTagName("th")[1].innerHTML, e.getElementsByTagName("th")[2].innerHTML, localStorage.getItem("im"), f,storedArray,storedName)
             addToHistory(x, e.getElementsByTagName("th")[1].innerHTML, e.getElementsByTagName("th")[2].innerHTML);
             // console.log(currentHistory[1].by)
+            
 
             document.querySelector(".scroll1").innerHTML = "";
             for (let i = 0; i < currentHistory.length; i++) {

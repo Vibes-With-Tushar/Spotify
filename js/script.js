@@ -178,7 +178,7 @@ async function main() {
 
     play.addEventListener("click", () => {
 
-        // console.log("play/pause");
+        console.log("play/pause");
         if (currentsong.paused) {
             currentsong.play();
             play.innerHTML = `<svg width="800px" height="800px" viewBox="0 0 29 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -215,11 +215,14 @@ async function main() {
         document.querySelector(".circle").style.left = (perc + "%");
         document.querySelector(".fill").style.width = (perc + "%");
         currentsong.currentTime = ((currentsong.duration) * perc) / 100;
+        
+        console.log("cur-seek");
     }
     )
     currentsong.addEventListener("timeupdate", () => {
         let x = currentsong.currentTime;
         let y = currentsong.duration;
+        console.log("cur-dur");
         if (!isNaN(currentsong.duration) && isFinite(currentsong.duration)) {
             document.querySelector(".song_time").innerHTML = `${secondsToMMSS(x)}/${secondsToMMSS(y)}`
             document.querySelector(".circle").style.left = (x / y) * 100 + "%";
