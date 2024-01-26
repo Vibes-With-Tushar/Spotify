@@ -14,7 +14,7 @@ let flag = 0;
 let y = [];
 let aname = [];
 let time = [];
-let p = await fetch(`/Playlist/${storedValue}/info.json`)
+let p = await fetch(`https://raw.githubusercontent.com/Vibes-With-Tushar/Spotify/master/Playlist/${storedValue}/info.json`)
 let response = await p.json()
 ran(response.rgba[0], response.rgba[1], response.rgba[2], response.rgba[3])
 list(response.img, response.title, response.des)
@@ -24,6 +24,7 @@ async function main() {
     let x = storedValue;
 
     let songs = await getSongs(x)
+    // console.log(songs[1])
     for (let j = 0; j < songs.length; j++) {
         y[j] = songs[j].split(`/${x}/`)[1].replaceAll("%20", " ");
         // console.log(y[j])

@@ -1,7 +1,7 @@
 import { playMusic } from "./listsrc.js";
 import { currentsong } from './listsrc.js';
 import { secondsToMMSS } from './listsrc.js';
-console.log("Script")
+// console.log("Script")
 let gridc;
 let gridwid;
 
@@ -79,9 +79,9 @@ async function fold() {
             if (response[j].name == "info.json") {
                 let url1 = response[j].download_url;
                 let folder = (url1.split("/")[7]);
-                // console.log(folder);
                 let p1 = await fetch(url1)
                 let response1 = await p1.json()
+                // console.log(response[j].download_url);
                 cardCont.innerHTML = cardCont.innerHTML + `<div data-file="${folder}" class="box df br">
                 <img class="ig df br" src="${response1.img}" alt="img">
                 <h2 class="heads">
@@ -126,7 +126,7 @@ async function fold() {
             var rootElement = document.documentElement;
             rootElement.style.setProperty('--val', x);
             localStorage.setItem('--val', x);
-            // library()
+            library()
 
         })
 
@@ -178,7 +178,7 @@ async function main() {
 
     play.addEventListener("click", () => {
 
-        console.log("play/pause");
+        // console.log("play/pause");
         if (currentsong.paused) {
             currentsong.play();
             play.innerHTML = `<svg width="800px" height="800px" viewBox="0 0 29 24" fill="none" xmlns="http://www.w3.org/2000/svg">

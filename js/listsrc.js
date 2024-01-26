@@ -71,7 +71,7 @@ export function ran(no, n1, s, l) {
 
         function color(n, f, s, l) {
             let a = Math.ceil((Math.random() * n) + f);
-            console.log(a)
+            // console.log(a)
             return `hsl(${a},${s}%,${l}%)`;
         }
 
@@ -83,24 +83,25 @@ export function ran(no, n1, s, l) {
     });
 }
 export async function getSongs(x) {
-    let p = await fetch(`/Playlist/${x}/`)
+    let p = await fetch(`https://api.github.com/repos/Vibes-With-Tushar/Spotify/contents/Playlist/${x}?ref=master`)
     let response = await p.text()
     // console.log(response);
     let div = document.createElement("div");
     div.innerHTML = response;
-    let as = div.getElementsByTagName("a")
-    // console.log(as);
+    let objFromStr = JSON.parse(response);
+    // let as = div.getElementsByTagName("a")
+    // console.log(objFromStr);
     let song = [];
-    for (let i = 0; i < as.length; i++) {
-        const element = as[i];
-        if (element.href.endsWith(".mp3")) {
-            song.push(element.href)
+    for (let i = 0; i < objFromStr.length; i++) {
+        const element = objFromStr[i].download_url;
+        if(element.endsWith(".mp3")){
+            song.push(element)
         }
-
-    }
+        }       
     return song
-
 }
+
+
 export function getDuration(src) {
     return new Promise(function (resolve) {
         var audio = new Audio();
@@ -132,7 +133,7 @@ export function secondsToMMSS(seconds) {
 
 export let currentsong = new Audio();
 export function playMusic(track, pause = false, x) {
-    currentsong.src = (`/Playlist/${x}/` + track)
+    currentsong.src = (`https://raw.githubusercontent.com/Vibes-With-Tushar/Spotify/master/Playlist/${x}/` + track)
     if (!pause) {
         setTimeout(() => {
 
@@ -191,12 +192,12 @@ export function recent(x, t, by, im, flag, r, q) {
         // p[im] = x;
         // q[im]=html;
         q.push(html)
-        console.log(r[im]);
+        // console.log(r[im]);
         im++;
     }
 
     else {
-        console.log("im=" + im);
+        // console.log("im=" + im);
         if (im > 9) {
             
             im = 0;
@@ -238,7 +239,7 @@ export function recent(x, t, by, im, flag, r, q) {
                 </svg></button>
                 </div>`;
 
-            console.log(r[im]);
+            // console.log(r[im]);
             im++;
         }
         else {
@@ -260,7 +261,7 @@ export function recent(x, t, by, im, flag, r, q) {
                 r[im] = currentsong.src;
                 // p[im] = x;
                 q[im] = html;
-                console.log(r[im]);
+                // console.log(r[im]);
                 im++;
             }
 
