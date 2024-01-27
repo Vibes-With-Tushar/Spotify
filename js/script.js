@@ -65,7 +65,7 @@ let ply=["Bollywod","Dream","Hollywood","Party","Punjabi","Rap","Sad","Vibes"];
 async function fold() {
     let cardCont = document.querySelector(".albums");
     for (let i = 0; i < ply.length; i++) {
-            let p = await fetch(`/Playlist/${ply[i]}/info.json`)
+            let p = await fetch(`./Playlist/${ply[i]}/info.json`)
             let response = await p.json()
             cardCont.innerHTML = cardCont.innerHTML + `<div data-file="${ply[i]}" class="box df br">
             <img class="ig df br" src="${response.img}" alt="img">
