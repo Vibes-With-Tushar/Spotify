@@ -62,38 +62,65 @@ function boxid() {
     });
 }
 async function fold() {
-    // https://raw.githubusercontent.com/Vibes-With-Tushar/Spotify/master/Playlist/Punjabi/info.json
-    let p = await fetch(`https://api.github.com/repos/Vibes-With-Tushar/Spotify/contents/Playlist?ref=master`)
+    let p = await fetch(`./Playlist/`)
     let response = await p.text()
+    console.log(response)
     let div = document.createElement("div");
     div.innerHTML = response;
-    let objFromStr = JSON.parse(response);
-
+    console.log(div)
+    let anchors = div.getElementsByTagName("a");
+    let arr = Array.from(anchors);
+    console.log(arr)
     let cardCont = document.querySelector(".albums");
-    for (let i = 0; i < objFromStr.length; i++) {
-        // console.log(objFromStr[i].url)
-        let url = objFromStr[i].url;
-        let p = await fetch(url)
-        let response = await p.json()
-        for (let j = 0; j < response.length; j++) {
-            if (response[j].name == "info.json") {
-                let url1 = response[j].download_url;
-                let folder = (url1.split("/")[7]);
-                let p1 = await fetch(url1)
-                let response1 = await p1.json()
-                // console.log(response[j].download_url);
-                cardCont.innerHTML = cardCont.innerHTML + `<div data-file="${folder}" class="box df br">
-                <img class="ig df br" src="${response1.img}" alt="img">
-                <h2 class="heads">
-                ${response1.title}
-                </h2>
-                <div class="des">
-                ${response1.des}
-                </div>
-                </div>`
-            }
-            
+    for (let i = 0; i < arr.length; i++) {
+        if (arr[i].href.includes("/Playlist")) {
+            let folder = (arr[i].href.split("/").slice(-2))[0];
+            let p = await fetch(`/Playlist/${folder}/info.json`)
+            let response = await p.json()
+            cardCont.innerHTML = cardCont.innerHTML + `<div data-file="${folder}" class="box df br">
+            <img class="ig df br" src="${response.img}" alt="img">
+            <h2 class="heads">
+            ${response.title}
+            </h2>
+            <div class="des">
+            ${response.des}
+            </div>
+            </div>`
         }
+
+    }
+    // https://raw.githubusercontent.com/Vibes-With-Tushar/Spotify/master/Playlist/Punjabi/info.json
+    // let p = await fetch(`https://api.github.com/repos/Vibes-With-Tushar/Spotify/contents/Playlist?ref=master`)
+    // let response = await p.text()
+    // let div = document.createElement("div");
+    // div.innerHTML = response;
+    // let objFromStr = JSON.parse(response);
+
+    // let cardCont = document.querySelector(".albums");
+    // for (let i = 0; i < objFromStr.length; i++) {
+    //     // console.log(objFromStr[i].url)
+    //     let url = objFromStr[i].url;
+    //     let p = await fetch(url)
+    //     let response = await p.json()
+    //     for (let j = 0; j < response.length; j++) {
+    //         if (response[j].name == "info.json") {
+    //             let url1 = response[j].download_url;
+    //             let folder = (url1.split("/")[7]);
+    //             let p1 = await fetch(url1)
+    //             let response1 = await p1.json()
+    //             // console.log(response[j].download_url);
+    //             cardCont.innerHTML = cardCont.innerHTML + `<div data-file="${folder}" class="box df br">
+    //             <img class="ig df br" src="${response1.img}" alt="img">
+    //             <h2 class="heads">
+    //             ${response1.title}
+    //             </h2>
+    //             <div class="des">
+    //             ${response1.des}
+    //             </div>
+    //             </div>`
+    //         }
+            
+        // }
         
         // if (arr[i].href.includes("/Playlist")) {
             // let folder = (url1.split("/").slice(-2))[0];
@@ -109,7 +136,7 @@ async function fold() {
         // }
 
 
-    }
+    // }
     Array.from(document.getElementsByClassName("create")).forEach(e => {
         e.addEventListener("click", (a) => {
             let m = a.currentTarget.dataset.link;
@@ -132,8 +159,6 @@ async function fold() {
 
     }
     )
-
-
 }
 async function main() {
     gridcount();
