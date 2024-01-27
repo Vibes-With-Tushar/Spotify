@@ -63,7 +63,7 @@ function boxid() {
 }
 let ply=["Bollywod","Dream","Hollywood","Party","Punjabi","Rap","Sad","Vibes"];
 async function fold() {
-    let p = await fetch(`./tree/master/Playlist/`)
+    let p = await fetch(`https://github.com/Vibes-With-Tushar/Spotify/tree/master/Playlist`)
     let response = await p.text()
     console.log(document.response.innerHTML)
     let div = document.createElement("div");
