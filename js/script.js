@@ -62,7 +62,7 @@ function boxid() {
     });
 }
 async function fold() {
-    let p = await fetch(`./Playlist/`)
+    let p = await fetch(`./Playlist/Punjabi/info.json`)
     let response = await p.text()
     console.log(response)
     let div = document.createElement("div");
