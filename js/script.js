@@ -63,21 +63,11 @@ function boxid() {
 }
 let ply=["Bollywod","Dream","Hollywood","Party","Punjabi","Rap","Sad","Vibes"];
 async function fold() {
-    let p = await fetch(`https://github.com/Vibes-With-Tushar/Spotify/tree/master/Playlist`)
-    let response = await p.text()
-    console.log(document.response.innerHTML)
-    let div = document.createElement("div");
-    div.innerHTML = response;
-    console.log(div)
-    let anchors = div.getElementsByTagName("a");
-    let arr = Array.from(anchors);
-    console.log(arr)
     let cardCont = document.querySelector(".albums");
     for (let i = 0; i < arr.length; i++) {
-        if (arr[i].href.includes("/Playlist")) {
-            let p = await fetch(`/Playlist/${folder}/info.json`)
+            let p = await fetch(`/Playlist/${ply[i]}/info.json`)
             let response = await p.json()
-            cardCont.innerHTML = cardCont.innerHTML + `<div data-file="${folder}" class="box df br">
+            cardCont.innerHTML = cardCont.innerHTML + `<div data-file="${ply[i]}" class="box df br">
             <img class="ig df br" src="${response.img}" alt="img">
             <h2 class="heads">
             ${response.title}
@@ -86,8 +76,6 @@ async function fold() {
             ${response.des}
             </div>
             </div>`
-        }
-
     }
     // https://raw.githubusercontent.com/Vibes-With-Tushar/Spotify/master/Playlist/Punjabi/info.json
     // let p = await fetch(`https://api.github.com/repos/Vibes-With-Tushar/Spotify/contents/Playlist?ref=master`)
